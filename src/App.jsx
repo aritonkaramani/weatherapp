@@ -16,7 +16,7 @@ function App() {
   
 
   useEffect(() => {
-    axios.get(`http://${api.baseNoPageBreak}`)
+    axios.get(`https://${api.baseNoPageBreak}`)
     .then(res => {
       setWeather(res.data)
     })
@@ -42,7 +42,7 @@ function App() {
 
   const onEnterPress = evt => {
     if(evt.key === "Enter"){
-      axios.get(`http://${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
+      axios.get(`https://${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
       .then(res => {
         setWeather(res.data)
         setQuery('')

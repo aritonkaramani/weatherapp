@@ -1,0 +1,90 @@
+.App{
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  .wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    input{
+      display: flex;
+      height: 30px;
+      justify-content: center;
+      width: 80%;
+
+      appearance: none;
+      border: none;
+      background-color: none;
+      outline: none;
+      background-color: rgba(255,255,255,0.5);
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0px 5px rgba(0,0,0,0.2);
+    }
+  .textwrapper{
+    display: flex;
+    height: 50vh;
+    flex-direction: column;
+    width: 100%;
+
+    .location-box{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 30px;
+      .date{
+        display: flex;
+        justify-content: center;
+        font-size: 24px;
+        color: white;
+        font-weight: 600;
+        text-shadow: 2px 2px rgba(0,0,0,0.2);
+        font-style: italic;
+      }
+      .location{
+        display: flex;
+        justify-content: center;
+        font-size: 42px;
+        color: white;
+        font-weight: 600;
+        text-shadow: 3px 3px rgba(0,0,0,0.2);
+      }
+    }
+    .weatherbox{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .temp{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 100px;
+        color: white;
+        text-shadow: 6px 6px rgba(0,0,0,0.2);
+        background: white;
+        background: linear-gradient(to right bottom, rgba(255,255,255,0.7),rgba(255,255,255,0.3));
+        box-shadow: 10px 10px rgba(0,0,0,0.2);
+        height: 30vh;
+        width: 80%;
+        margin-bottom: 20px;
+        border-radius: 15%;
+      }
+      .weather{
+        display: flex;
+        font-size: 24px;
+        color: white;
+        text-shadow: 2px 2px rgba(0,0,0,0.2);
+      }
+      .weatherIcon{
+        width: 40%;
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+}

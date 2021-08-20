@@ -13,21 +13,12 @@ function App() {
   const api = {
     key: "29b3245b274832af2341a683f1348817",
     base: "api.openweathermap.org/data/2.5/",
-    baseNoPageBreak: "api.openweathermap.org/data/2.5/weather?q=Malmo&units=metric&appid=29b3245b274832af2341a683f1348817"
   }
   const [query,setQuery] = useState('');
-  const [forQuery,setForQuery] = useState('');
-  const [cords,setCords] = useState({});
   const [forecast,setForecast] = useState({});
-  const [weather,setWeather] = useState({});
+  const [location,setLocation] = useState('');
   
 
-  useEffect(() => {
-    axios.get(`https://${api.baseNoPageBreak}`)
-    .then(res => {
-      setWeather(res.data)
-    })
-  },[])
 
   function weatherImage(key){
 
@@ -58,7 +49,6 @@ function App() {
       case "Dust":
       case "Fog":
       case "Sand":
-      case "Dust":
       case "Ash":
       case "Squall":
       case "Tornado":
@@ -70,33 +60,38 @@ function App() {
     return icon;
 
   }
-
-
-  const onEnterPress = async evt => {
-    if(evt.key === "Enter"){
-      axios.get(`https://${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
-      .then(res => {
-        setWeather(res.data)
-        setQuery('')
-
-      })
-      .then(
-        axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${api.key}`)
-        .then(result => {
-          setCords(result.data) // cords
-          if(cords.length != null) {
-          axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${cords[0].lat}&lon=${cords[0].lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${api.key}`)
-          .then(result => {
-            setForecast(result.data)
-            console.log(result.data)
-          })
-        }
-          
-        })
-        )
+  const cordLocation = (lat, lon) => {
+    axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${api.key}`)
+    .then(result => {
+      setLocation(result.data[0].name)
+    }
+    )
   }
-   
+
+  const onEnterPress = (evt) => {
+    if(evt.key === "Enter"){
+      axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${api.key}`)
+     .then(result => {
+       console.log(result.data)
+      axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${result.data[0].lat}&lon=${result.data[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=${api.key}`)
+      .then(result => {
+        setForecast(result.data)
+        setQuery('')
+        cordLocation(result.data.lat,result.data.lon)
+        console.log(result.data)
+  })
+})    
+}  
 }
+  useEffect(() => {
+    axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=Malmo&limit=1&appid=${api.key}`)
+     .then(result => {
+      axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${result.data[0].lat}&lon=${result.data[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=${api.key}`)
+      .then(result => {
+        setForecast(result.data)
+  })
+})    
+  },[])
 
   let date = String(new window.Date());
   date = date.slice(3,15);
@@ -106,16 +101,70 @@ function App() {
     <div className="App">
       <div className="wrapper">
         <input type="text" placeholder="Search for city..." onChange={e => setQuery(e.target.value)} value={query} onKeyPress={onEnterPress}/>
-        {(typeof weather.main != "undefined") ? (
+        {(typeof forecast.daily != "undefined") ? (
+
+          
           <div className="textwrapper">
         <div className="location-box">
-          <div className="location">{weather.name} , {weather.sys.country}</div>
+          <div className="location">{location}</div>
           <div className="date">{date}</div>
         </div>
         <div className="weatherbox">
-          <div className="temp">{Math.floor(weather.main.temp)}°C</div>
-          <div className="weather">{weather.weather[0].main}</div>
-          <div className="weatherIcon"><img src={weatherImage(weather.weather[0].main)} alt="" /></div>
+          <div className="temp">{Math.round(forecast.current.temp)}°C</div>
+          <div className="weather">{forecast.current.weather[0].main}</div>
+          <div className="weatherIcon"><img src={weatherImage(forecast.current.weather[0].main)} alt="" /></div>
+        </div>
+        <div className="forecast">
+          <ul>
+            <li>
+              {Math.round(forecast.daily[0].temp.day)}°C
+              <span></span>{forecast.daily[0].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[0].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[1].temp.day)}°C
+              <span></span>{forecast.daily[1].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[1].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[2].temp.day)}°C
+              <span></span>{forecast.daily[2].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[2].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[3].temp.day)}°C
+              <span></span>{forecast.daily[3].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[3].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[4].temp.day)}°C
+              <span></span>{forecast.daily[4].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[4].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[5].temp.day)}°C
+              <span></span>{forecast.daily[5].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[5].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[6].temp.day)}°C
+              <span></span>{forecast.daily[6].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[6].weather[0].main)} alt="" />
+            </li>
+            <li>
+              {Math.round(forecast.daily[7].temp.day)}°C
+              <span></span>{forecast.daily[7].weather[0].main}
+              <span></span>
+              <img src={weatherImage(forecast.daily[7].weather[0].main)} alt="" />
+            </li>
+          </ul>
         </div>
         </div>
         ) : ('')} 

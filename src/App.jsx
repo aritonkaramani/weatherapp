@@ -16,7 +16,7 @@ function App() {
   }
   const [query,setQuery] = useState('');
   const [forecast,setForecast] = useState({});
-  const [location,setLocation] = useState('');
+  const [location,setLocation] = useState('Malmö');
   
 
 
@@ -93,8 +93,17 @@ function App() {
 })    
   },[])
 
-  let date = String(new window.Date());
-  date = date.slice(3,15);
+
+  var week = [];
+  let date = new window.Date();
+  for(let i = 0; i<7; i++){
+    date.setDate(date.getDate() + 1);
+    week.push(String(date).slice(0,3));
+  }
+  let todaysDate = String(new window.Date());
+  todaysDate = todaysDate.slice(3,15);
+
+
 
 
   return (
@@ -107,7 +116,7 @@ function App() {
           <div className="textwrapper">
         <div className="location-box">
           <div className="location">{location}</div>
-          <div className="date">{date}</div>
+          <div className="date">{todaysDate}</div>
         </div>
         <div className="weatherbox">
           <div className="temp">{Math.round(forecast.current.temp)}°C</div>
@@ -117,52 +126,53 @@ function App() {
         <div className="forecast">
           <ul>
             <li>
+              {week[0]}
+              <span></span>
               {Math.round(forecast.daily[0].temp.day)}°C
-              <span></span>{forecast.daily[0].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[0].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[1]}
+              <span></span>
               {Math.round(forecast.daily[1].temp.day)}°C
-              <span></span>{forecast.daily[1].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[1].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[2]}
+              <span></span>
               {Math.round(forecast.daily[2].temp.day)}°C
-              <span></span>{forecast.daily[2].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[2].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[3]}
+              <span></span>
               {Math.round(forecast.daily[3].temp.day)}°C
-              <span></span>{forecast.daily[3].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[3].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[4]}
+              <span></span>
               {Math.round(forecast.daily[4].temp.day)}°C
-              <span></span>{forecast.daily[4].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[4].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[5]}
+              <span></span>
               {Math.round(forecast.daily[5].temp.day)}°C
-              <span></span>{forecast.daily[5].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[5].weather[0].main)} alt="" />
             </li>
             <li>
+              {week[6]}
+              <span></span>
               {Math.round(forecast.daily[6].temp.day)}°C
-              <span></span>{forecast.daily[6].weather[0].main}
               <span></span>
               <img src={weatherImage(forecast.daily[6].weather[0].main)} alt="" />
-            </li>
-            <li>
-              {Math.round(forecast.daily[7].temp.day)}°C
-              <span></span>{forecast.daily[7].weather[0].main}
-              <span></span>
-              <img src={weatherImage(forecast.daily[7].weather[0].main)} alt="" />
             </li>
           </ul>
         </div>

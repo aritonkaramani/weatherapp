@@ -16,7 +16,7 @@ function App() {
   }
   const [query,setQuery] = useState('');
   const [forecast,setForecast] = useState({});
-  const [location,setLocation] = useState('Malmö');
+  const [location,setLocation] = useState('Malmö, SE');
   
 
 
@@ -63,23 +63,31 @@ function App() {
   const cordLocation = (lat, lon) => {
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${api.key}`)
     .then(result => {
-      setLocation(result.data[0].name)
+      setLocation(`${result.data[0].name}, ${result.data[0].country}`)
     }
     )
   }
 
   const onEnterPress = (evt) => {
     if(evt.key === "Enter"){
-      axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${api.key}`)
+      console.log(axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${api.key}`))
+      axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${api.key}`) 
      .then(result => {
        console.log(result.data)
-      axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${result.data[0].lat}&lon=${result.data[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=${api.key}`)
+       if(result.data.length === 0){
+         alert("Location Does Not Exist")
+         setQuery('')
+       }else{
+        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${result.data[0].lat}&lon=${result.data[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=${api.key}`)
       .then(result => {
         setForecast(result.data)
         setQuery('')
         cordLocation(result.data.lat,result.data.lon)
         console.log(result.data)
+      
   })
+       }
+      
 })    
 }  
 }

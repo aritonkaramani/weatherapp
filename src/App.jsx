@@ -110,15 +110,12 @@ function App() {
   }
   let todaysDate = String(new window.Date());
   todaysDate = todaysDate.slice(3,15);
-
-
-
-
   return (
     <div className="App">
-      <div className="wrapper">
+      {(typeof forecast.daily != "undefined") ? (
+      <div className={("wrapper")}>
         <input type="text" placeholder="Search for city..." onChange={e => setQuery(e.target.value)} value={query} onKeyPress={onEnterPress}/>
-        {(typeof forecast.daily != "undefined") ? (
+        
 
           
           <div className="textwrapper">
@@ -185,8 +182,9 @@ function App() {
           </ul>
         </div>
         </div>
-        ) : ('')} 
+       
       </div>
+      ) : ('')} 
     </div>
   );
 }

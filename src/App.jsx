@@ -96,6 +96,7 @@ function App() {
      .then(result => {
       axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${result.data[0].lat}&lon=${result.data[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=${api.key}`)
       .then(result => {
+        console.log(result.data)
         setForecast(result.data)
   })
 })    
@@ -131,53 +132,39 @@ function App() {
         <div className="forecast">
           <ul>
             <li>
-              {week[0]}
-              <span></span>
-              {Math.round(forecast.daily[0].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[0].weather[0].main)} alt="" />
+              <p>{week[0]}</p>
+              <p>{Math.round(forecast.daily[0].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[0].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[1]}
-              <span></span>
-              {Math.round(forecast.daily[1].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[1].weather[0].main)} alt="" />
+              <p>{week[1]}</p>
+              <p>{Math.round(forecast.daily[1].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[1].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[2]}
-              <span></span>
-              {Math.round(forecast.daily[2].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[2].weather[0].main)} alt="" />
+              <p>{week[2]}</p>
+              <p>{Math.round(forecast.daily[2].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[2].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[3]}
-              <span></span>
-              {Math.round(forecast.daily[3].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[3].weather[0].main)} alt="" />
+              <p>{week[3]}</p>
+              <p>{Math.round(forecast.daily[3].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[3].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[4]}
-              <span></span>
-              {Math.round(forecast.daily[4].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[4].weather[0].main)} alt="" />
+              <p>{week[4]}</p>
+              <p>{Math.round(forecast.daily[4].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[4].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[5]}
-              <span></span>
-              {Math.round(forecast.daily[5].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[5].weather[0].main)} alt="" />
+              <p>{week[5]}</p>
+              <p>{Math.round(forecast.daily[5].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[5].weather[0].main)} alt="" /></p>
             </li>
             <li>
-              {week[6]}
-              <span></span>
-              {Math.round(forecast.daily[6].temp.day)}°C
-              <span></span>
-              <img src={weatherImage(forecast.daily[6].weather[0].main)} alt="" />
+              <p>{week[6]}</p>
+              <p>{Math.round(forecast.daily[6].temp.day)}°C</p>
+              <p><img src={weatherImage(forecast.daily[6].weather[0].main)} alt="" /></p>
             </li>
           </ul>
         </div>
